@@ -1,0 +1,5 @@
+export( cbc.get.col, cbc.read.table, colnames.colbycol, nrow.colbycol, ncol.colbycol )
+
+S3method(colnames, colbycol)
+S3method(ncol, colbycol)
+S3method(nrow, colbycol)
