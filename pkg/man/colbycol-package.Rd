@@ -10,7 +10,7 @@ This package tries to solve the memory restrictions posed by large text files by
 \tabular{ll}{
 Package: \tab colbycol\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
+Version: \tab 0.2\cr
 Date: \tab 2009-05-09\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr

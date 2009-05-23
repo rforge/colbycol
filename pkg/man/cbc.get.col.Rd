@@ -24,7 +24,13 @@ cbc.get.col(data, column)
 \author{ Carlos J. Gil Bellosta }
 %-\note{ }
 %-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-%- \examples{ }
+\examples{
+    cbc.data <- cbc.read.table( system.file("data", "cbc.test.data.txt", package = "colbycol"), sep = "\t" )
+    ncol( cbc.data )
+    colnames( cbc.data )
+    col.01 <- cbc.get.col( cbc.data, 1)
+    col.02 <- cbc.get.col( cbc.data, "col02" )
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ manip }

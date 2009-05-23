@@ -30,11 +30,18 @@ cbc.read.table(file, tmp.dir = tempfile( pattern = "dir" ), sep = "\t", header =
 \value{
   An object of class \code{colbycol} containing the metadata required to access the data from the original file that is stored in \code{tmp.dir}.
 }
-\references{ ~put references to the literature/web site here ~ }
+\references{ None }
 \author{ Carlos J. Gil Bellosta }
 %- \note{ }
 \seealso{ \code{\link{read.table}}, \code{\link{save}} }
-\examples{ }
+\examples{
+    cbc.data <- cbc.read.table( system.file("data", "cbc.test.data.txt", package = "colbycol"), sep = "\t" )
+    nrow( cbc.data )
+    colnames( cbc.data )
+    col.01 <- cbc.get.col( cbc.data, 1)
+    col.02 <- cbc.get.col( cbc.data, "col02" )
+}
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ manip }

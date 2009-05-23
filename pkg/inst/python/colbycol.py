@@ -13,7 +13,7 @@ def main(argv=None):
     conf_data = open( ".delete", "r" ).readlines()
 
     file_in   = open( conf_data[0].split("|")[1].strip(), "r" )
-    sep       = conf_data[1].split(":")[1].strip()
+    sep       = conf_data[1].split(":")[1][2]                       # We cannot "strip" as it would eliminate "white" characters; tricky!!!
 
     skip      = int( conf_data[2].split(":")[1].strip() )
 
@@ -26,7 +26,7 @@ def main(argv=None):
         if cont <= skip:
             continue
 
-        line = unicode( line, errors = "ignore" )
+        # line = unicode( line, errors = "ignore" )             # It broke compatibility with Python 3.0
 
         tokens = line.split( sep )
 
@@ -37,7 +37,8 @@ def main(argv=None):
             token = tokens[i].strip()
             if token == "":
                 token = "NA"
-            files_out[i].write( token.encode("utf8") + "\n" )
+            # files_out[i].write( token.encode("utf8") + "\n" )     # It broke compatibility with Python 3.0
+            files_out[i].write( token + "\n" )
 
     for file_out in files_out:
         file_out.close()
