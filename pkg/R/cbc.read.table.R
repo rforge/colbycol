@@ -44,7 +44,19 @@ cbc.read.table <- function( file, tmp.dir = tempfile( pattern = "dir" ), sep = "
     cat( "skip     : ", skip, "\n", file = ".delete", append = TRUE )
     cat( "files    : ", paste( lapply( columns, function(x) x$filename ), collapse = ";" ), "\n", file = ".delete", append = TRUE )
 
-    try( system( paste( "python", system.file("python", "colbycol.py", package = "colbycol"), getwd() ) ))
+    ret.val <- system( paste( "python", system.file("python", "colbycol.py", package = "colbycol"), getwd() ) ) 
+
+    if( ret.val ){
+        cat( "\n" )
+        cat( "Error in external call to python.\n")
+        cat( "The most likely cause is that python is not properly configured in your system. In such case:\n" )
+        cat( "  If you are on a UNIX-like platform, make sure that python is installed and on your path.\n" )
+        cat( "  If you are on Windows, you may have to:\n" )
+        cat( "     Install python, if not on your system.\n" )
+        cat( "     Configure the path environment variable to make it directly callable from R. You may want\n" )
+        cat( "        to check http://support.microsoft.com/kb/310519\n" )
+        cat( "\n" )
+    }
 
     file.remove( ".delete" )
 
