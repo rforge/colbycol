@@ -12,6 +12,9 @@
 
 cbc.read.table <- function( file, tmp.dir = tempfile( pattern = "dir" ), sep = "\t", header = TRUE, ... )
 {
+
+    # Checks parameters for errors
+
     if( ! file.exists( file ) )
         stop("Missing input file.")
 
@@ -21,6 +24,8 @@ cbc.read.table <- function( file, tmp.dir = tempfile( pattern = "dir" ), sep = "
     if( ! file.exists( tmp.dir ) && ! dir.create( tmp.dir, recursive = TRUE )  )
         stop("The destination directory cannot be either found or created.")
 
+    # Sets original and target dirs
+
     original.dir <- getwd()
     on.exit( setwd( original.dir ) )
 
@@ -28,6 +33,8 @@ cbc.read.table <- function( file, tmp.dir = tempfile( pattern = "dir" ), sep = "
 
     if( length( dir() > 0 ) )
         stop("The destination directory is not empty.")
+
+    # Sips the data to get metadata info
 
     tmp.data <- read.table( file, nrows = 50, sep = sep, header = header, ... )
 
@@ -44,19 +51,23 @@ cbc.read.table <- function( file, tmp.dir = tempfile( pattern = "dir" ), sep = "
     cat( "skip     : ", skip, "\n", file = ".delete", append = TRUE )
     cat( "files    : ", paste( lapply( columns, function(x) x$filename ), collapse = ";" ), "\n", file = ".delete", append = TRUE )
 
-    ret.val <- system( paste( "python", system.file("python", "colbycol.py", package = "colbycol"), getwd() ) ) 
+    # From here on, calls to Python via Jython
+    # Adapted from G. Grothendieck's sympyStart function from package rSymPy
 
-    if( ret.val ){
-        cat( "\n" )
-        cat( "Error in external call to python.\n")
-        cat( "The most likely cause is that python is not properly configured in your system. In such case:\n" )
-        cat( "  If you are on a UNIX-like platform, make sure that python is installed and on your path.\n" )
-        cat( "  If you are on Windows, you may have to:\n" )
-        cat( "     Install python, if not on your system.\n" )
-        cat( "     Configure the path environment variable to make it directly callable from R. You may want\n" )
-        cat( "        to check http://support.microsoft.com/kb/310519\n" )
-        cat( "\n" )
+    if (!exists(".Jython", .GlobalEnv)){
+
+        jython <- Sys.getenv("RSYMPY_JYTHON")
+        if (jython == "") jython <- system.file("jython", package = "rSymPy")
+
+        library(rJava)
+        .jinit(file.path(jython, "jython.jar"))
+        assign(".Jython", .jnew("org.python.util.PythonInterpreter"), .GlobalEnv)
     }
+    
+    .jcall(.Jython, "V", "exec", paste("work_dir = '", getwd(), "'", sep = "" ))        # Assigns the path in Jython; all required data resides there
+    .jcall(.Jython, "V", "execfile", system.file("python", "colbycol.py", package = "colbycol") ) 
+
+    # At this point, the input files should already be sliced
 
     file.remove( ".delete" )
 

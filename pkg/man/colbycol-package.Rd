@@ -10,13 +10,11 @@ This package tries to solve the memory restrictions posed by large text files by
 \tabular{ll}{
 Package: \tab colbycol\cr
 Type: \tab Package\cr
-Version: \tab 0.2\cr
-Date: \tab 2009-05-09\cr
+Version: \tab 0.3\cr
+Date: \tab 2009-06-27\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
 }
 \author{
 Maintainer: Carlos J. Gil Bellosta <cgb@datanalytics.com>
