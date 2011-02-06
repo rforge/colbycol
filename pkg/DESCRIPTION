@@ -1,7 +1,7 @@
 Package: colbycol
 Type: Package
 Title: Read big text files column by column
-Version: 0.4
+Version: 0.5
 Date: 2009-07-29
 Author: Carlos J. Gil Bellosta
 Maintainer: Carlos J. Gil Bellosta <cgb@datanalytics.com>
