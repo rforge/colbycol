@@ -28,6 +28,65 @@
 
 <p>The reason for such inefficiency is that R stores data.frames in memory as columns (a data.frame is no more than a list of equal length vectors) whereas text files consist of rows of records. Therefore, R's read.table needs to read whole lines, process them individually breaking into tokens and transposing these tokens into column oriented data structures.</p>
 
+<h3>Short tutorial</h3>
+
+First, we will create a <em>huge</em> file on disk. 
+
+<pre>
+n.rows    <- 10000
+n.cols    <- 100
+n.levels  <- 200
+
+df.double <- data.frame( matrix( rnorm( n.rows * n.cols ), n.rows, n.cols) )
+df.integ  <- data.frame( matrix( sample( 1:(n.rows * n.cols), n.rows * n.cols, replace = T ), n.rows, n.cols ) )
+
+
+df.txt    <- sample( 1:20, n.levels, replace = T )
+df.txt    <- sapply( df.txt, function(i) paste( sample( letters, i, replace = T ), collapse = "" ) )
+df.txt    <- replicate( n.cols, sample( df.txt, n.rows, replace = T ), simplify = F )
+df.txt    <- as.data.frame( df.txt )
+colnames( df.txt ) <- paste( "txt", 1:n.cols, sep = "." )
+
+df.all    <- cbind( df.double, df.integ, df.txt )
+
+write.table( df.all, file = "bigsize.txt", col.names = T, row.names = F, sep = "," )
+replicate( 25, write.table( df.all, file = "bigsize.txt", col.names = F, row.names = F, sep = ",", append = T ) )
+
+</pre>
+
+The file thus created is about 1GB in size. You can gauge the <code>n.rows</code>, <code>n.cols</code>, and <code>n.levels</code> to get file sizes suitable to your system.
+
+If you are breve enough, you can then try to load the file in the <em>standard</em> way, i.e,
+
+<pre>
+can.i   <- read.table( "bigsize.txt", header = T, sep = "," )         # in fact, I cannot
+</pre>
+
+but I advise you not to.
+Instead, you can use the <code>colbycol</code> package as follows:
+
+<pre>
+library( colbycol )
+i.can <- cbc.read.table( "bigsize.txt", header = T, sep = "," )
+</pre>
+
+After a few minutes, your <code>i.can</code> object of class <code>colbycol</code> will be available. 
+What you do after that with it is up to you, but you can try, for instance,
+
+<pre>
+summary( i.can )
+colnames( i.can )
+
+sapply( 1:100, function( x ) summary( cbc.get.col( i.can, x ) )  )
+
+# my.df <- as.data.frame( i.can )                   # perhaps too much
+
+my.df <- as.data.frame( i.can, columns = 1:10 )
+my.df <- as.data.frame( i.can, columns = 1:10 )
+my.df <- as.data.frame( i.can, columns = 1:10, rows = 1:300 )
+my.df <- as.data.frame( i.can, rows = 1:300 )
+</pre>
+
 <h3>ColByCol approach</h3>
 
 <p>ColByCol approach is memory efficient. Using Java code, tt reads the input text file and outputs it into several text files, each holding an individual column of the original dataset. Then, these files are read individually into R thus avoiding R's memory bottleneck.</p>
