@@ -6,6 +6,7 @@ Date: 2011-03-19
 Author: Carlos J. Gil Bellosta
 Maintainer: Carlos J. Gil Bellosta <cgb@datanalytics.com>
 Description: This package tries to solve the memory restrictions posed by large text files by breaking them into their columns first. These columns are later read individually into R. The package also provides some helper functions for manipulating the newly created objects.
+URL: http://colbycol.r-forge.r-project.org
 Depends: rJava
 License: GPL
 LazyLoad: yes
