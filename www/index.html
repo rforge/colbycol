@@ -87,6 +87,15 @@ my.df <- as.data.frame( i.can, columns = 1:10, rows = 1:300 )
 my.df <- as.data.frame( i.can, rows = 1:300 )
 </pre>
 
+It is not even necessary to preprocess all the rows and columns from the original text file. For instance, the commands
+
+<pre>
+i.can <- cbc.read.table( "bigsize.txt", just.read = 1:100, header = T, sep = "," )
+i.can <- cbc.read.table( "bigsize.txt", sample.pct = 0.5, header = T, sep = "," )
+</pre>
+
+will just read the columns <code>1:100</code> of the text file and a random sample of approximately 50% of its rows respectively.
+
 <h3>ColByCol approach</h3>
 
 <p>ColByCol approach is memory efficient. Using Java code, tt reads the input text file and outputs it into several text files, each holding an individual column of the original dataset. Then, these files are read individually into R thus avoiding R's memory bottleneck.</p>
