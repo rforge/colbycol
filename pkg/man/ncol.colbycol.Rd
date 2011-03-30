@@ -14,11 +14,13 @@
 \usage{
 \method{ncol}{colbycol}(x)
 \method{nrow}{colbycol}(x)
-\method{summary}{colbycol}(x)
+\method{summary}{colbycol}( object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ a \code{colbycol} object }
+  \item{object}{ a \code{colbycol} object }
+  \item{...}{ currently unused }
 }
 %-\details{ }
 \value{

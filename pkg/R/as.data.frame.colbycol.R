@@ -10,7 +10,7 @@
 #
 #################################################################
 
-as.data.frame.colbycol <- function( data, columns = NULL, rows = NULL ) 
+as.data.frame.colbycol <- function( x, row.names, optional, ..., rows = NULL, columns = NULL ) 
 {
     if( ! is.null( rows ) ) {
         if( ! is.numeric( rows ) )
@@ -18,19 +18,19 @@ as.data.frame.colbycol <- function( data, columns = NULL, rows = NULL )
 
         rows <- as.integer( rows )
         rows <- rows[ rows > 0 ]
-        rows <- rows[ rows < nrow( data ) ]
+        rows <- rows[ rows < nrow( x ) ]
 
         if( length( rows ) == 0 ) 
             stop( "No rows were found to be extracted" )
     }
 
-    cols.to.extract <- 1:ncol( data )
+    cols.to.extract <- 1:ncol( x )
 
     if( ! is.null( columns ) ){
         if( is.character( columns ) )
-            columns <- which( colnames( data ) %in% columns )
+            columns <- which( colnames( x ) %in% columns )
         if( is.numeric( columns ) )
-            columns <- intersect( columns, 1:ncol( data ) )
+            columns <- intersect( columns, 1:ncol( x ) )
         if( !is.numeric( columns ) )
             stop( "Either the column indexes or the column names of the colbycol object should be provided in the columns argument" )
 
@@ -38,7 +38,7 @@ as.data.frame.colbycol <- function( data, columns = NULL, rows = NULL )
     }
 
     foo <- function( column.index ){
-        tmp <- cbc.get.col( data, column.index )
+        tmp <- cbc.get.col( x, column.index )
         if( !is.null( rows ) )
             tmp <- tmp[ rows ]
         gc()
@@ -47,6 +47,6 @@ as.data.frame.colbycol <- function( data, columns = NULL, rows = NULL )
 
     tmp <- do.call( data.frame, sapply( cols.to.extract, foo, simplify = FALSE ) )
     gc()
-    colnames( tmp ) <- colnames( data )[ cols.to.extract ]
+    colnames( tmp ) <- colnames( x )[ cols.to.extract ]
     tmp
 }
