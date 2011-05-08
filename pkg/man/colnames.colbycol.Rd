@@ -17,7 +17,7 @@
   \item{do.NULL}{ required for the \code{colnames} default function }
   \item{prefix}{ required for the \code{colnames} default function }
 }
-\details{ }
+%\details{ }
 \value{
     A character vector containing the names of the columns in \code{x}.
 }
