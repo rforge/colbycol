@@ -26,7 +26,7 @@
 %-\note{ }
 \seealso{ \code{\link[base]{colnames}} }
 \examples{
-    cbc.data <- cbc.read.table( system.file("data", 
+    cbc.data <- cbc.read.table( system.file("extdata", 
         "cbc.test.data.txt", package = "colbycol"), sep = "\t" )
     colnames( cbc.data )
 }

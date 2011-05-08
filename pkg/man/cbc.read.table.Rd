@@ -45,17 +45,17 @@ cbc.read.table(file, filehash.name = tempfile( pattern = "filehash_" ), tmp.dir 
 %- \note{ }
 \seealso{ \code{\link{read.table}}, \code{\link{save}} }
 \examples{
-    cbc.data <- cbc.read.table( system.file("data", "cbc.test.data.txt", 
+    cbc.data <- cbc.read.table( system.file("extdata", "cbc.test.data.txt", 
             package = "colbycol"), sep = "\t" )
     nrow( cbc.data )
     colnames( cbc.data )
     col.01 <- cbc.get.col( cbc.data, 1)
     col.02 <- cbc.get.col( cbc.data, "col02" )
 
-    cbc.data.sampled <- cbc.read.table( system.file("data", 
+    cbc.data.sampled <- cbc.read.table( system.file("extdata", 
             "cbc.test.data.txt", package = "colbycol"), 
             sample.pct = 0.4, sep = "\t" )
-    cbc.data.2.cols  <- cbc.read.table( system.file("data", 
+    cbc.data.2.cols  <- cbc.read.table( system.file("extdata", 
             "cbc.test.data.txt", package = "colbycol"), 
             just.read = c( 1, 3), sep = "\t" )
 }

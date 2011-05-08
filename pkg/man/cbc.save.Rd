@@ -25,7 +25,7 @@ cbc.load( file.name )
 %-\note{ }
 %-\seealso{ \code{\link[base]{ncol}}, \code{\link[base]{nrow}} }
 \examples{
-    cbc.data <- cbc.read.table( system.file("data", 
+    cbc.data <- cbc.read.table( system.file("extdata", 
         "cbc.test.data.txt", package = "colbycol"), sep = "\t" )
     new.cbc.data <- cbc.load( cbc.save( cbc.data ) )
 }
