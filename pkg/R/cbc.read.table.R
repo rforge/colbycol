@@ -56,7 +56,7 @@ cbc.read.table <- function( file, filehash.name = tempfile( pattern = "filehash_
 
     if( ! is.null( just.read ) ){
         if( is.character( just.read ) )
-            just.read <- which( just.read %in% names( columns ) )
+            just.read <- which(names(columns) %in% just.read)
         if( is.logical( just.read ) )
             just.read <- which( just.read )
         if( is.numeric( just.read ) )
