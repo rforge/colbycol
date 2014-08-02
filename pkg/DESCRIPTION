@@ -1,8 +1,8 @@
 Package: colbycol
 Type: Package
 Title: Read big text files column by column, sometimes much bigger than available RAM, into R. 
-Version: 0.8
-Date: 2013-10-21
+Version: 0.8.1
+Date: 2014-08-02
 Author: Carlos J. Gil Bellosta
 Maintainer: Carlos J. Gil Bellosta <cgb@datanalytics.com>
 Description: This package tries to solve the memory restrictions posed by large text files by breaking them into their columns first. These columns are later read individually into R. The package also provides some helper functions for manipulating the newly created objects.
